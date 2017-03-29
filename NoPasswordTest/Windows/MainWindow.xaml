@@ -1,0 +1,40 @@
+﻿<Window x:Class="NoPasswordTest.Windows.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:NoPasswordTest.ViewModels"
+        xmlns:properties="clr-namespace:NoPasswordTest.Properties"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance viewModels:MainViewModel}"
+		WindowStartupLocation="CenterScreen"
+        Title="{x:Static properties:Resources.MainWindow_Title}"
+		Height="350"
+		Width="525">
+    <Grid>
+	    <Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+	    <Button Width="100" Height="25" Content="{x:Static properties:Resources.MainWindow_PairDevice}"
+	            VerticalAlignment="Top" HorizontalAlignment="Left" Margin="25"
+	            Command="{Binding PairCommand}">
+		    <Button.Style>
+			    <Style TargetType="Button">
+				    <Setter Property="IsEnabled" Value="False" />
+				    <Style.Triggers>
+					    <DataTrigger Binding="{Binding PairedDeviceName}" Value="{x:Null}">
+						    <Setter Property="IsEnabled" Value="True" />
+					    </DataTrigger>
+				    </Style.Triggers>
+			    </Style>
+		    </Button.Style>
+	    </Button>
+
+		<TextBlock Grid.Row="1" Margin="20,0"
+				   Text="{Binding PairedDeviceName,
+								  StringFormat='{x:Static properties:Resources.MainWindow_PairedDevice}',
+								  TargetNullValue={x:Static system:String.Empty}}"/>
+	</Grid>
+</Window>
